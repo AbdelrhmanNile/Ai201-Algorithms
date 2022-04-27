@@ -1,8 +1,15 @@
 import os
 
-board = {1:' ', 2:' ', 3:' ',
-         4:' ', 5:' ', 6:' ',
-         7:' ', 8:' ', 9:' '}
+#board = {1:' ', 2:' ', 3:' ',
+#         4:' ', 5:' ', 6:' ',
+#         7:' ', 8:' ', 9:' '}
+
+
+
+board = {1:' ', 2:'X', 3:' ',
+         4:'O', 5:' ', 6:'X',
+         7:'O', 8:'O', 9:'X'}
+
 
 def drawBoard(board):
     for key in board:
@@ -10,6 +17,7 @@ def drawBoard(board):
             print(board[key] + '\n')
         else:
             print(board[key] + ' | ', end='')
+    print("+++++++++++++++")
 
 def isEmpty(pos):
     if board[pos] == ' ':
@@ -66,7 +74,7 @@ def checkWinMark(mark):
 def insertPos(letter, pos):
     if isEmpty(pos):
         board[pos] = letter;
-        os.system('clear')
+        #os.system('clear')
         drawBoard(board)
 
         
@@ -104,6 +112,7 @@ def minimax(board, depth, isMaximizing):
             if(board[key]==' '):
                 board[key] = ai
                 score = int(minimax(board, 100, False))
+                drawBoard(board) ## for debugging and seeing the tree
                 board[key] = ' '
                 if(score > bestScore):
                     bestScore = score
@@ -114,8 +123,9 @@ def minimax(board, depth, isMaximizing):
 
         for key in board:
             if(board[key]==' '):
-                board[key] = ai
+                board[key] = player
                 score = int(minimax(board, 100, True))
+                #drawBoard(board)
                 board[key] = ' '
                 if(score < bestScore):
                     bestScore = score
@@ -140,6 +150,7 @@ def aiMove():
         if(board[key]==' '):
             board[key] = ai
             score = int(minimax(board, 100, False))
+            #drawBoard(board)
             board[key] = ' '
             if(score > bestScore):
                 bestScore = score
